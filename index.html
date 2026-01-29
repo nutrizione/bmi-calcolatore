@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calcolatore BMI e Perdita di Peso</title>
+  <title>Calcolatore BMI e Calo Ponderale</title>
   <style>
     body {
       font-family: 'Open Sans', sans-serif;
@@ -16,10 +16,19 @@
       max-width: 720px;
       margin: 0 auto;
     }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .header img {
+      max-height: 60px;
+    }
     h1 {
       color: #DB0632;
       font-size: 1.8rem;
-      margin-bottom: 1rem;
+      margin: 0;
     }
     label {
       font-weight: 600;
@@ -66,7 +75,12 @@
 <body>
 
   <div class="container">
-    <h1>Calcolatore BMI e perdita di peso</h1>
+
+    <!-- HEADER CON LOGO -->
+    <div class="header">
+      <img src="amici-italia.png" alt="AMICI Italia">
+      <h1>Calcolatore BMI e calo ponderale</h1>
+    </div>
 
     <label for="peso">Peso attuale (kg)</label>
     <input type="number" id="peso" step="0.1" min="0" />
@@ -96,19 +110,19 @@
       const altezzaM = altezzaCm / 100;
       const bmi = peso / (altezzaM * altezzaM);
 
-      // Calcolo perdita di peso: se negativa → 0
-      let perditaPeso = ((pesoPrev - peso) / pesoPrev) * 100;
-      if (perditaPeso < 0) perditaPeso = 0;
+      // Calo ponderale: se negativo → 0
+      let caloPonderale = ((pesoPrev - peso) / pesoPrev) * 100;
+      if (caloPonderale < 0) caloPonderale = 0;
 
       const bmiRounded = bmi.toFixed(1);
-      const perditaRounded = perditaPeso.toFixed(1);
+      const caloRounded = caloPonderale.toFixed(1);
 
       const risultato = document.getElementById("risultato");
       risultato.style.display = "block";
       risultato.innerHTML = `
         <h2 style="margin-top:0;">Risultati</h2>
         <p><strong>BMI:</strong> ${bmiRounded}</p>
-        <p><strong>Perdita di peso (3–6 mesi):</strong> ${perditaRounded}%</p>
+        <p><strong>Calo ponderale (ultimi 3–6 mesi):</strong> ${caloRounded}%</p>
         <div class="note">
           I risultati hanno finalità informative e non sostituiscono il parere del professionista sanitario.
         </div>
