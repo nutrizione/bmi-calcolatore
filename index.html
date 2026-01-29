@@ -95,7 +95,10 @@
 
       const altezzaM = altezzaCm / 100;
       const bmi = peso / (altezzaM * altezzaM);
-      const perditaPeso = ((pesoPrev - peso) / pesoPrev) * 100;
+
+      // Calcolo perdita di peso: se negativa → 0
+      let perditaPeso = ((pesoPrev - peso) / pesoPrev) * 100;
+      if (perditaPeso < 0) perditaPeso = 0;
 
       const bmiRounded = bmi.toFixed(1);
       const perditaRounded = perditaPeso.toFixed(1);
