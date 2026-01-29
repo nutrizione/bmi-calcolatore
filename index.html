@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calcolatore BMI e Perdita di Peso</title>
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background-color: #f9f9f9;
+      color: #0D1D41;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #DB0632;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin: 0.75rem 0 0.35rem;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1.2rem;
+      background-color: #DB0632;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #b20429;
+    }
+    .result {
+      margin-top: 1.5rem;
+      padding: 1.2rem;
+      background-color: #e0f7f5;
+      border-left: 6px solid #DB0632;
+      display: none;
+    }
+    .result p {
+      margin: 0.4rem 0;
+    }
+    .note {
+      margin-top: 0.8rem;
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Calcolatore BMI e perdita di peso</h1>
+
+    <label for="peso">Peso attuale (kg)</label>
+    <input type="number" id="peso" step="0.1" min="0" />
+
+    <label for="altezza">Altezza (cm)</label>
+    <input type="number" id="altezza" step="0.1" min="0" />
+
+    <label for="pesoPrev">Peso 3–6 mesi fa (kg)</label>
+    <input type="number" id="pesoPrev" step="0.1" min="0" />
+
+    <button type="button" onclick="calcola()">Calcola</button>
+
+    <div class="result" id="risultato"></div>
+  </div>
+
+  <script>
+    function calcola() {
+      const peso = parseFloat(document.getElementById("peso").value);
+      const altezzaCm = parseFloat(document.getElementById("altezza").value);
+      const pesoPrev = parseFloat(document.getElementById("pesoPrev").value);
+
+      if (!(peso > 0) || !(altezzaCm > 0) || !(pesoPrev > 0)) {
+        alert("Compila tutti i campi con valori validi.");
+        return;
+      }
+
+      const altezzaM = altezzaCm / 100;
+      const bmi = peso / (altezzaM * altezzaM);
+      const perditaPeso = ((pesoPrev - peso) / pesoPrev) * 100;
+
+      const bmiRounded = bmi.toFixed(1);
+      const perditaRounded = perditaPeso.toFixed(1);
+
+      const risultato = document.getElementById("risultato");
+      risultato.style.display = "block";
+      risultato.innerHTML = `
+        <h2 style="margin-top:0;">Risultati</h2>
+        <p><strong>BMI:</strong> ${bmiRounded}</p>
+        <p><strong>Perdita di peso (3–6 mesi):</strong> ${perditaRounded}%</p>
+        <div class="note">
+          I risultati hanno finalità informative e non sostituiscono il parere del professionista sanitario.
+        </div>
+        <button type="button" onclick="resetCalcolatore()" style="margin-top:1rem;">
+          Ricalcola
+        </button>
+      `;
+    }
+
+    function resetCalcolatore() {
+      document.getElementById("peso").value = "";
+      document.getElementById("altezza").value = "";
+      document.getElementById("pesoPrev").value = "";
+
+      const risultato = document.getElementById("risultato");
+      risultato.style.display = "none";
+      risultato.innerHTML = "";
+    }
+  </script>
+
+</body>
+</html>
